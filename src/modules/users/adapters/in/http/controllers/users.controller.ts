@@ -32,7 +32,7 @@ export class UsersController {
 
   @Post()
   @ApiBody({ type: CreateUserRequestDto })
-  @ApiCreatedResponse({ description: 'User created successfully', type: ErrorResponseDto })
+  @ApiCreatedResponse({ description: 'User created successfully', type: CreateUserRequestDto })
   @ApiConflictResponse({
     description: 'User with the given email already exists',
     type: ErrorResponseDto,
