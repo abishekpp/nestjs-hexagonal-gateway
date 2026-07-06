@@ -6,6 +6,7 @@ import { json, urlencoded } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { bootstrapConfig } from './config/lifecycle/bootstrap-config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { APP_NAME } from './shared/constants/app.constants';
 
 async function bootstrap() {
   await bootstrapConfig();
@@ -86,6 +87,6 @@ async function bootstrap() {
   // Start the server
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  Logger.log(`Application running on port ${port}`);
+  Logger.log(`${APP_NAME} running on port ${port}`);
 }
 bootstrap();
