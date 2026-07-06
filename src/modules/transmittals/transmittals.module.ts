@@ -15,7 +15,10 @@ import { join } from 'path';
                 transport: Transport.GRPC,
                 options: {
                     package: 'transmittal',
-                    protoPath: join(__dirname, 'src/modules/transmittals/adapters/out/grpc-client/proto/transmittal.proto',),
+                    protoPath: join( 
+                        process.cwd(),
+                        'src/modules/transmittals/adapters/out/grpc-client/proto/transmittal.proto'
+                    ),
                     url:  process.env.TRANSMITTAL_SERVICE_GRPC_URL ?? 'localhost:50052',
                 },
             }
