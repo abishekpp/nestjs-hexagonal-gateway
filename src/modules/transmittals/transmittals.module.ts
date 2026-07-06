@@ -8,31 +8,31 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 
 @Module({
-    imports: [
-        ClientsModule.register([
-            {
-                name: 'TRANSMITTAL_GRPC_PACKAGE',
-                transport: Transport.GRPC,
-                options: {
-                    package: 'transmittal',
-                    protoPath: join( 
-                        process.cwd(),
-                        'src/modules/transmittals/adapters/out/grpc-client/proto/transmittal.proto'
-                    ),
-                    url:  process.env.TRANSMITTAL_SERVICE_GRPC_URL ?? 'localhost:50052',
-                },
-            }
-        ])
-    ],
-    controllers: [TransmittalsHttpController],
-    providers: [
-        CreateTransmittalGatewayUseCase,
-        GetTransmittalByIdGatewayUseCase,
-        {
-            provide: TRANSMITTAL_SERVICE_CLIENT_PORT,
-            useClass: TransmittalServiceGrpcAdapter
-        }
-    ],
-    exports: [],
+  imports: [
+    ClientsModule.register([
+      {
+        name: 'TRANSMITTAL_GRPC_PACKAGE',
+        transport: Transport.GRPC,
+        options: {
+          package: 'transmittal',
+          protoPath: join(
+            process.cwd(),
+            'src/modules/transmittals/adapters/out/grpc-client/proto/transmittal.proto',
+          ),
+          url: process.env.CORE_SERVICE_GRPC_URL ?? 'localhost:50052',
+        },
+      },
+    ]),
+  ],
+  controllers: [TransmittalsHttpController],
+  providers: [
+    CreateTransmittalGatewayUseCase,
+    GetTransmittalByIdGatewayUseCase,
+    {
+      provide: TRANSMITTAL_SERVICE_CLIENT_PORT,
+      useClass: TransmittalServiceGrpcAdapter,
+    },
+  ],
+  exports: [],
 })
 export class TransmittalsModule {}
