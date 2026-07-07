@@ -1,11 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class TransmittalDataResponseDto {
+export class WorkflowDataResponseDto {
   @ApiProperty()
   id!: string;
-
-  @ApiProperty()
-  transmittalNumber!: string;
 
   @ApiProperty()
   projectId!: string;
@@ -33,4 +30,16 @@ export class TransmittalDataResponseDto {
 
   @ApiProperty()
   createdAt!: string;
+
+  @ApiProperty()
+  updatedAt!: string;
+
+  @ApiPropertyOptional()
+  completedAt?: string;
+
+  @ApiPropertyOptional()
+  transmittalId?: string;
+
+  @ApiPropertyOptional()
+  transmittalNumber?: string;
 }

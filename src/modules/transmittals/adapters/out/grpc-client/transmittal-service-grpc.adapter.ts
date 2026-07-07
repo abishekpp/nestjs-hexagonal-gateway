@@ -1,16 +1,14 @@
-import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
-import { TransmittalServiceClientPort } from "src/modules/transmittals/ports/out/ transmittal-service-client.port";
-import { TransmittalGrpcService } from "./transmittal-grpc.types";
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { TransmittalServiceClientPort } from 'src/modules/transmittals/ports/out/ transmittal-service-client.port';
+import { TransmittalGrpcService } from './transmittal-grpc.types';
 import type { ClientGrpc } from '@nestjs/microservices';
-import { firstValueFrom, Observable } from 'rxjs';
-import { CreateTransmittalInput } from "src/modules/transmittals/application/dto/inputs/create-transmittal.input";
-import { CreateTransmittalOutput } from "src/modules/transmittals/application/dto/outputs/create-transmittal.output";
-import { TransmittalOutput } from "src/modules/transmittals/application/dto/outputs/transmittal.output";
+import { firstValueFrom } from 'rxjs';
+import { CreateTransmittalInput } from 'src/modules/transmittals/application/dto/inputs/create-transmittal.input';
+import { CreateTransmittalOutput } from 'src/modules/transmittals/application/dto/outputs/create-transmittal.output';
+import { TransmittalOutput } from 'src/modules/transmittals/application/dto/outputs/transmittal.output';
 
 @Injectable()
-export class TransmittalServiceGrpcAdapter
-  implements TransmittalServiceClientPort, OnModuleInit
-{
+export class TransmittalServiceGrpcAdapter implements TransmittalServiceClientPort, OnModuleInit {
   private transmittalGrpcService!: TransmittalGrpcService;
 
   constructor(
@@ -23,9 +21,7 @@ export class TransmittalServiceGrpcAdapter
       this.client.getService<TransmittalGrpcService>('TransmittalService');
   }
 
-  async createTransmittal(
-    input: CreateTransmittalInput,
-  ): Promise<CreateTransmittalOutput> {
+  async createTransmittal(input: CreateTransmittalInput): Promise<CreateTransmittalOutput> {
     const response = await firstValueFrom(
       this.transmittalGrpcService.createTransmittal({
         projectId: input.projectId,
@@ -46,12 +42,8 @@ export class TransmittalServiceGrpcAdapter
     };
   }
 
-  async getTransmittalById(
-    id: string,
-  ): Promise<TransmittalOutput | null> {
-    const response = await firstValueFrom(
-      this.transmittalGrpcService.getTransmittalById({ id }),
-    );
+  async getTransmittalById(id: string): Promise<TransmittalOutput | null> {
+    const response = await firstValueFrom(this.transmittalGrpcService.getTransmittalById({ id }));
 
     if (!response) {
       return null;

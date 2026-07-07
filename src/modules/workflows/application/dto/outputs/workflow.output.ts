@@ -1,6 +1,5 @@
-export interface TransmittalOutput {
+export interface WorkflowOutput {
   id: string;
-  transmittalNumber: string;
   projectId: string;
   subject: string;
   documentIds: string[];
@@ -10,4 +9,8 @@ export interface TransmittalOutput {
   remarks?: string;
   createdBy: string;
   createdAt: string;
+  updatedAt: string;
+  completedAt?: string;
+  transmittalId?: string;
+  transmittalNumber?: string;
 }

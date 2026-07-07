@@ -1,13 +1,9 @@
-export interface TransmittalOutput {
-  id: string;
-  transmittalNumber: string;
+export interface CreateWorkflowInput {
   projectId: string;
   subject: string;
   documentIds: string[];
   recipientIds: string[];
-  status: string;
   dueDate?: string;
   remarks?: string;
   createdBy: string;
-  createdAt: string;
 }

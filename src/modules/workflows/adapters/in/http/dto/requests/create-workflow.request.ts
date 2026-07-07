@@ -8,7 +8,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class CreateTransmittalRequestDto {
+export class CreateWorkflowRequestDto {
   @ApiProperty({
     example: 'project-uuid',
   })
@@ -16,7 +16,7 @@ export class CreateTransmittalRequestDto {
   projectId!: string;
 
   @ApiProperty({
-    example: 'Issued for review - HVAC shop drawings',
+    example: 'Workflow for HVAC shop drawing review',
   })
   @IsString()
   @MaxLength(255)
@@ -48,7 +48,7 @@ export class CreateTransmittalRequestDto {
   dueDate?: string;
 
   @ApiPropertyOptional({
-    example: 'Please review and respond within 7 days.',
+    example: 'Complete this workflow after review approval.',
   })
   @IsOptional()
   @IsString()

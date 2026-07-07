@@ -1,15 +1,14 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import {
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTransmittalGatewayUseCase } from '../../../../application/use-cases/create-transmittal-gateway.use-case';
 import { GetTransmittalByIdGatewayUseCase } from '../../../../application/use-cases/get-transmittal-by-id-gateway.use-case';
 import { CreateTransmittalRequestDto } from '../dto/requests/create-transmittal.request';
-import { TransmittalHttpMapper } from '../mappers/transmittal-http.mapper';
 import { CreateTransmittalDataResponseDto } from '../dto/responses/create-transmittal.response';
 import { TransmittalDataResponseDto } from '../dto/responses/transmittal.response';
+import {
+  toCreateTransmittalResponse,
+  toTransmittalResponse,
+} from '../mappers/transmittal-http.mapper';
 
 @ApiTags('Transmittals')
 @Controller('transmittals')
@@ -41,7 +40,7 @@ export class TransmittalsHttpController {
     return {
       success: true,
       message: 'Transmittal created successfully',
-      data: TransmittalHttpMapper.toCreateResponse(output),
+      data: toCreateTransmittalResponse(output),
     };
   }
 
@@ -56,7 +55,7 @@ export class TransmittalsHttpController {
     return {
       success: true,
       message: 'Transmittal fetched successfully',
-      data: output ? TransmittalHttpMapper.toResponse(output) : null,
+      data: output ? toTransmittalResponse(output) : null,
     };
   }
 }

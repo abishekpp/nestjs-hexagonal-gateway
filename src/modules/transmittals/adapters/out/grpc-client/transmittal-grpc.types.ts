@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 interface CreateTransmittalGrpcRequest {
   projectId: string;
@@ -36,11 +36,7 @@ interface TransmittalGrpcResponse {
 }
 
 export interface TransmittalGrpcService {
-  createTransmittal(
-    data: CreateTransmittalGrpcRequest,
-  ): Observable<CreateTransmittalGrpcResponse>;
+  createTransmittal(data: CreateTransmittalGrpcRequest): Observable<CreateTransmittalGrpcResponse>;
 
-  getTransmittalById(
-    data: GetTransmittalByIdGrpcRequest,
-  ): Observable<TransmittalGrpcResponse>;
+  getTransmittalById(data: GetTransmittalByIdGrpcRequest): Observable<TransmittalGrpcResponse>;
 }
