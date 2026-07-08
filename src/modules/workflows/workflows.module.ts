@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { WorkflowsHttpController } from './adapters/in/http/controllers/workflows-http.controller';
 import { WorkflowServiceGrpcAdapter } from './adapters/out/grpc-client/workflow-service-grpc.adapter';
@@ -10,18 +11,22 @@ import { WORKFLOW_SERVICE_CLIENT_PORT } from './ports/out/workflow-service-clien
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'WORKFLOW_GRPC_PACKAGE',
-        transport: Transport.GRPC,
-        options: {
-          package: 'workflow',
-          protoPath: join(
-            process.cwd(),
-            'src/modules/workflows/adapters/out/grpc-client/proto/workflow.proto',
-          ),
-          url: process.env.CORE_SERVICE_GRPC_URL ?? 'localhost:50052',
-        },
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.GRPC,
+          options: {
+            package: 'workflow',
+            protoPath: join(
+              process.cwd(),
+              'src/modules/workflows/adapters/out/grpc-client/proto/workflow.proto',
+            ),
+            url: configService.get<string>('CORE_SERVICE_GRPC_URL', 'localhost:50052'),
+          },
+        }),
       },
     ]),
   ],

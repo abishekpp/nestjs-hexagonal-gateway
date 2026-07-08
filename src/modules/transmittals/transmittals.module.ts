@@ -5,22 +5,27 @@ import { GetTransmittalByIdGatewayUseCase } from './application/use-cases/get-tr
 import { TRANSMITTAL_SERVICE_CLIENT_PORT } from './ports/out/ transmittal-service-client.port';
 import { TransmittalServiceGrpcAdapter } from './adapters/out/grpc-client/transmittal-service-grpc.adapter';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'TRANSMITTAL_GRPC_PACKAGE',
-        transport: Transport.GRPC,
-        options: {
-          package: 'transmittal',
-          protoPath: join(
-            process.cwd(),
-            'src/modules/transmittals/adapters/out/grpc-client/proto/transmittal.proto',
-          ),
-          url: process.env.CORE_SERVICE_GRPC_URL ?? 'localhost:50052',
-        },
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.GRPC,
+          options: {
+            package: 'transmittal',
+            protoPath: join(
+              process.cwd(),
+              'src/modules/transmittals/adapters/out/grpc-client/proto/transmittal.proto',
+            ),
+            url: configService.get<string>('CORE_SERVICE_GRPC_URL', 'localhost:50052'),
+          },
+        }),
       },
     ]),
   ],

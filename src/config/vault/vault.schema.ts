@@ -18,6 +18,9 @@ export class VaultConfig {
 
   @IsString()
   CORS_ORIGINS = '';
+
+  @IsString()
+  CORE_SERVICE_GRPC_URL = 'localhost:50052';
 }
 
 export function validateVaultConfig(config: Record<string, unknown>): VaultConfig {
